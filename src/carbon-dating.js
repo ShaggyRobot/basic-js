@@ -5,9 +5,13 @@ const HALF_LIFE_PERIOD = 5730
 const k = 0.693 / HALF_LIFE_PERIOD
 
 module.exports = function dateSample(sampleActivity) {
-  if (typeof sampleActivity != String) {
+  if (typeof(sampleActivity) != "string" && Number(sampleActivity) != 'number') {
+    console.log(">>>>>>>", sampleActivity, 'type is ',typeof(sampleActivity));
+    // console.log(">>>>>>>", typeof(sampleActivity));
     return false
   }
   let sa = Number(sampleActivity)
-  return isNaN(sa) ? false : Math.ceil(Math.log(MODERN_ACTIVITY / sa) / k)
+  let age = Math.ceil(Math.log(MODERN_ACTIVITY / sa) / k)
+  console.log(isFinite(sa), sa);
+  return isFinite(age) && age > 0 ? age : false
 }
